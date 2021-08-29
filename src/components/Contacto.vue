@@ -1,7 +1,7 @@
 <template>
   <div class="contact pa-16 my-15">
     <v-form
-      v-model="btnDisabled"
+      v-model="btnEnabled"
       ref="form"
       @submit.prevent="sendEmail"
       id="contacto"
@@ -15,7 +15,7 @@
             <div id="text-nombre">
               <v-text-field
                 v-model="title"
-                :rules="[rulesRequired]"
+                :rules=rulesRequired
                 label="Tu Nombre"
                 counter
                 maxlength="20"
@@ -27,7 +27,7 @@
             <div id="text-email">
               <v-text-field
                 v-model="email"
-                :rules="[rulesEmail]"
+                :rules=rulesEmail
                 label="E-mail"
               ></v-text-field>
             </div>
@@ -38,7 +38,7 @@
             <div id="text-asunto">
               <v-text-field
                 v-model="asunto"
-                :rules="rulesRequired"
+                :rules=rulesRequired
                 label="Asunto"
                 counter
                 maxlength="20"
@@ -50,9 +50,9 @@
         <div id="text-mensaje">
           <v-textarea
             counter
-            v-model="mesagge"
+            v-model="message"
             label="Tu Mensaje"
-            :rules="rulesMsj"
+            :rules=rulesMsj
             :value="value"
           ></v-textarea>
         </div>
@@ -60,32 +60,13 @@
           class="boton mt-16"
           type="submit"
           elevation="1"
-          v-bind:disabled="!btnDisabled"
+          v-bind:disabled="!btnEnabled"
           value="Send"
           >Enviar
         </v-btn>
         <a href="#nav">
-          <button
-            type="submit"
-            class="transition-swing v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--light v-size--large grey"
-            style="z-index: 6; margin-bottom: 0px; transform-origin: center center 0px;"
-            aria-label="Scroll to top"
-            title="Scroll to top"
-          >
-            <span class="v-btn__content"
-              ><span aria-hidden="true" class="v-icon notranslate theme--light"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  role="img"
-                  aria-hidden="true"
-                  class="v-icon__svg"
-                >
-                  <path
-                    d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"
-                  ></path></svg></span
-            ></span></button
-        ></a>
+              <button type="button" class="transition-swing v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--light v-size--large grey" aria-label="Vuelve al comienzo" title="Vuelve al comienzo" style="z-index: 6; margin-bottom: 89px; transform-origin: center center;"><span class="v-btn__content"><span aria-hidden="true" class="v-icon notranslate theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true" class="v-icon__svg"><path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"></path></svg></span></span></button>
+        </a>
         <v-card>
           <div class="exito">
             <v-snackbar
@@ -97,7 +78,7 @@
               color="success"
               centered
             >
-              ¡Su mesagge ha sido enviado con exito!
+              ¡Su mensaje ha sido enviado con exito!
             </v-snackbar>
           </div>
         </v-card>
@@ -114,11 +95,11 @@ import emailjs from "emailjs-com";
 export default {
   // eslint-disable-next-line no-unused-vars
   data: (value) => ({
-    btnDisabled: true,
+    btnEnabled: true,
     title: "",
     email: "",
     asunto: "",
-    mesagge: "",
+    message: "",
     exit: false,
     value: "",
 
@@ -134,35 +115,37 @@ export default {
   methods: {
     sendEmail(e) {
       if (this.$refs["form"].validate()) {
-        this.btnDisabled = true;
-        const vm = this;
+        this.btnEnabled = false;
+
         try {
           emailjs.sendForm(
             "service_oo2ukey",
-            "template_zvj9owu",
+            "template_vxzfy0r",
             e.target,
             "user_edvq6QQiWcxDtb3NinDbC",
             {
-              name: vm.name,
-              email: vm.email,
-              asunto: vm.asunto,
-              message: vm.message,
+              name: this.name,
+              email: this.email,
+              asunto: this.asunto,
+              message: this.message,
             }
+            
           );
-          this.botonEnviar();
+          this.btnEnviar()
         } catch (error) {
           console.log({ error });
         }
       }
     },
 
-    botonEnviar() {
+    btnEnviar() {
       this.title = "";
       this.email = "";
       this.asunto = "";
-      this.mesagge = "";
+      this.message = "";
       this.rulesRequired = "";
       this.rulesEmail = "";
+      this.rulesMsj= "";
       this.exit = true;
 
       setTimeout(() => {
@@ -181,5 +164,5 @@ export default {
 .titulo {
   background: linear-gradient(0deg, #0f1111, #d6dedf, #7077d3);
   color: #000000;
-}
-</style>
+}</style
+>-->
