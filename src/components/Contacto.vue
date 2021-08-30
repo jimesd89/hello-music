@@ -1,4 +1,5 @@
 <template>
+
   <div class="contact pa-16 my-15">
     <v-form
       v-model="btnEnabled"
@@ -14,7 +15,8 @@
           <v-col cols="12" sm="6">
             <div id="text-nombre">
               <v-text-field
-                v-model="title"
+                v-model="name"
+                name="name"
                 :rules=rulesRequired
                 label="Tu Nombre"
                 counter
@@ -27,6 +29,7 @@
             <div id="text-email">
               <v-text-field
                 v-model="email"
+                name="email"
                 :rules=rulesEmail
                 label="E-mail"
               ></v-text-field>
@@ -38,6 +41,7 @@
             <div id="text-asunto">
               <v-text-field
                 v-model="asunto"
+                name="asunto"
                 :rules=rulesRequired
                 label="Asunto"
                 counter
@@ -51,9 +55,10 @@
           <v-textarea
             counter
             v-model="message"
+            name="message"
             label="Tu Mensaje"
             :rules=rulesMsj
-            :value="value"
+            
           ></v-textarea>
         </div>
         <v-btn
@@ -85,6 +90,7 @@
       </v-container>
     </v-form>
   </div>
+  
 </template>
 
 <script>
@@ -94,9 +100,11 @@ import emailjs from "emailjs-com";
 
 export default {
   // eslint-disable-next-line no-unused-vars
-  data: (value) => ({
+  name: 'ContactUs',
+  data () {
+    return {
     btnEnabled: true,
-    title: "",
+    name: "",
     email: "",
     asunto: "",
     message: "",
@@ -110,7 +118,8 @@ export default {
       (v) => !!v || "E-mail is required",
       (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
     ],
-  }),
+  }
+  },
 
   methods: {
     sendEmail(e) {
@@ -139,7 +148,7 @@ export default {
     },
 
     btnEnviar() {
-      this.title = "";
+      this.name = "";
       this.email = "";
       this.asunto = "";
       this.message = "";
